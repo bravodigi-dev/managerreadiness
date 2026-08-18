@@ -1,33 +1,37 @@
-# Resolver Manager 90-Day Self-Assessment — Final Simple Version
+# Resolver Manager 90-Day Self-Assessment — Final Interactive Version
 
-No Supabase. No database. No Assessment ID. No manager-rating workflow.
+This keeps the preferred interactive V3/V4 visual design while simplifying the workflow.
 
-## Intended flow
-1. Manager opens the GitHub Pages link.
-2. Enters her name and role information.
-3. Completes the 42-question self-assessment.
-4. Completes the 90-day reflection.
-5. Clicks **Complete Assessment & Generate Report**.
-6. Reviews her readiness dashboard.
-7. Clicks **Save / Print Report as PDF**.
-8. Emails the PDF report to her reporting manager.
-9. Reporting manager uses the report as the basis for the 90-day development discussion.
+## Flow
+1. Manager enters her details.
+2. Completes the 42-question self-assessment.
+3. Completes the 90-day reflection.
+4. Generates her personal readiness report.
+5. Saves/prints the report as PDF and emails it to her reporting manager.
+6. Reporting manager uses the report for the development discussion and agrees the next 60–90 day priorities.
 
-## Report contains
-- Employee/manager name
-- Role and role start date
-- Overall self-readiness %
-- Development stage
-- Number of "Not Yet Exposed" answers
-- Six capability scores
-- Three lowest-scoring discussion focus areas
-- Written reflection
-- 60–90 day development discussion inputs
+## Included
+- Preferred dark sidebar / purple-blue dashboard design
+- Live progress rings
+- 6 capability stepper
+- 42 interactive colour-coded questions
+- Optional notes per question
+- Manager details
+- Reflection
+- Overall self-readiness
+- Capability scores
+- Not Yet Exposed count
+- Top 3 discussion areas
+- 60–90 day development focus
+- PDF print/save
+- CSV download
+- Local Save Progress
+- Dark Mode
 
 ## GitHub
-Replace your current files with:
+Replace the old files with:
 - index.html
 - styles.css
 - app.js
 
-No config.js and no Supabase setup are required.
+No database, Supabase, Assessment ID or login is required.
