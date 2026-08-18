@@ -1,52 +1,59 @@
-# Resolver Manager 90-Day Readiness Assessment — V2
+# Resolver Manager 90-Day Readiness Assessment — Interactive Dashboard V3
 
-This version expands the assessment around the initial Resolver manager handover expectations.
-
-## Six capability areas
-1. Resolver Process & Operational Knowledge — 25%
-2. Performance & Data Management — 15%
-3. Team Leadership & People Management — 20%
-4. Client Management & Stakeholder Confidence — 15%
-5. Decision Making, Ownership & Operational Control — 15%
-6. Governance, Improvement & Resolver Development — 10%
-
-## Assessment philosophy
-This is a readiness/development assessment, not a pass/fail test.
-
-Scale:
-1. Not Yet Exposed
-2. Basic Awareness
-3. Can Manage With Guidance
-4. Can Manage Independently
-5. Can Lead / Coach Others
-
-The report separately highlights "Not Yet Exposed" items so limited opportunity to learn is visible rather than being treated only as poor performance.
-
-## Outputs
-- Weighted overall readiness %
-- Capability-level %
-- Count of Not Yet Exposed items
-- Three lowest-scoring development focus areas
+## Included
+- Dark left navigation
+- Live overall progress %
+- Circular progress indicators
+- 6 capability stepper
+- Interactive 1–5 rating cards
+- Optional notes for every question
 - Reflection section
-- Print / Save as PDF
+- Readiness result dashboard
+- Automatic top 3 development focus areas
+- Save progress locally
+- Dark mode
+- PDF print/save
 - CSV export
 - JSON export
+- Responsive mobile layout
 
-## GitHub Pages
-1. Create a repository such as `resolver-manager-readiness`
-2. Upload `index.html`, `styles.css`, `app.js`
+## GitHub Pages setup
+1. Create a GitHub repository, e.g. `resolver-manager-readiness`
+2. Upload:
+   - index.html
+   - styles.css
+   - app.js
 3. Go to Settings > Pages
-4. Publish from the main branch / root
-5. Share the GitHub Pages URL
+4. Select the `main` branch and `/root`
+5. Save
+6. GitHub will generate the public Pages URL
 
 ## Privacy
-The current version does not submit data to GitHub or a database.
-All answers remain in the participant's browser until they download the report.
-Do not use a public GitHub repository to store completed employee assessments.
+This is a static GitHub Pages version.
+Completed responses are NOT uploaded anywhere automatically.
+Saved progress uses browser localStorage only.
+For confidential employee assessment data, do not commit completed reports to a public GitHub repository.
 
-## Recommended next step
-Add a secure reviewer dashboard and a second Manager Assessment using the same questions. Then compare:
-- Self Score
-- Manager Score
-- Gap
-- Development priority
+## Next upgrade
+A secure backend can be added later for:
+- manager login
+- participant submission
+- manager assessment
+- self vs manager comparison
+- historical 90 / 120 / 180-day comparison
+
+
+## V4 additions
+- Six-capability radar chart
+- Manager assessment input (0–100% per capability)
+- Self vs Manager weighted overall comparison
+- Capability-by-capability gap view
+- Gap interpretation
+- Green / Amber / Red development heatmap
+- Heatmap uses average of Self + Manager scores:
+  - Green: 75%+
+  - Amber: 55–74%
+  - Red: below 55%
+- Suggested 60–90 day action guidance by readiness band
+
+The manager scores are entered locally in the browser and are not transmitted to GitHub.

@@ -7,75 +7,191 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="container">
-    <section class="hero">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brandIcon">◉</div>
       <div>
-        <p class="eyebrow">Resolver Leadership Development</p>
-        <h1>Resolver Manager 90-Day Readiness Assessment</h1>
-        <p class="subtitle">
-          Based on the initial handover expectations, this assessment measures current exposure,
-          understanding, confidence and ability to manage independently.
-        </p>
+        <strong>Resolver Leadership</strong>
+        <span>Development</span>
       </div>
-      <div class="badge">Development Assessment</div>
+    </div>
+
+    <nav>
+      <button class="navItem active" data-target="overview">⌂ <span>Overview</span></button>
+      <button class="navItem" data-target="assessment">▤ <span>Assessment</span></button>
+      <button class="navItem" data-target="reflection">□ <span>Reflection</span></button>
+      <button class="navItem" data-target="results">▥ <span>Results</span></button>
+      <button class="navItem" data-target="actionplan">◎ <span>Action Plan</span></button>
+    </nav>
+
+    <div class="sideCard">
+      <h4>Progress</h4>
+      <div class="progressRing" id="sideProgressRing">
+        <div class="ringInner"><span id="sideProgressPct">0%</span></div>
+      </div>
+      <p><strong id="sideAnswered">0</strong> of <strong id="sideTotal">0</strong> answered</p>
+    </div>
+
+    <div class="sideCard quote">
+      <div class="quoteMark">“</div>
+      <p>Good leaders build teams. Great leaders build capability.</p>
+      <span>— Leadership Development</span>
+    </div>
+
+    <div class="motivate">
+      <div class="star">★</div>
+      <span>You've got this!</span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section id="overview" class="topSection">
+      <div class="topbar">
+        <div>
+          <span class="pill">DEVELOPMENT ASSESSMENT</span>
+          <h1>Resolver Manager <span>90-Day</span> Readiness Assessment</h1>
+          <p>Hand-over-based assessment to measure current exposure, understanding, confidence and ability to manage independently.</p>
+        </div>
+        <div class="topActions">
+          <button class="ghostBtn" onclick="toggleDark()">☾ Dark Mode</button>
+          <button class="saveBtn" onclick="saveProgress()">Save Progress ⤓</button>
+        </div>
+      </div>
+
+      <div class="impactCard">
+        <div>
+          <h3>Your Growth<br>Your Impact</h3>
+          <span>Lead. Inspire. Deliver.</span>
+        </div>
+        <div class="trophy">🏆</div>
+      </div>
+
+      <div class="statsStrip">
+        <div class="stat">
+          <div class="donut" id="topDonut"><div><b id="topProgressPct">0%</b><small id="topProgressText">0 answered</small></div></div>
+          <span>Overall Progress</span>
+        </div>
+        <div class="stat"><div class="statIcon">▱</div><b>6</b><span>Assessment Sections</span></div>
+        <div class="stat"><div class="statIcon">▣</div><b id="questionCount">0</b><span>Total Questions</span></div>
+        <div class="stat"><div class="statIcon">◷</div><b>25–30</b><span>Est. Minutes</span></div>
+      </div>
+
+      <div class="stepper" id="stepper"></div>
     </section>
 
-    <section class="card intro">
-      <h2>Assessment Scale</h2>
-      <p>Rate yourself based on your current position today. Select <strong>1 — Not Yet Exposed</strong> where the handover or practical exposure has not yet taken place.</p>
-      <div class="scale">
-        <span><b>1</b> Not Yet Exposed</span>
-        <span><b>2</b> Basic Awareness</span>
-        <span><b>3</b> Can Manage With Guidance</span>
-        <span><b>4</b> Can Manage Independently</span>
-        <span><b>5</b> Can Lead / Coach Others</span>
+    <section id="assessment" class="contentSection">
+      <div id="surveyForm"></div>
+    </section>
+
+    <section id="reflection" class="contentSection reflectionCard">
+      <div class="sectionHeader">
+        <div>
+          <span class="sectionEyebrow">90-DAY REFLECTION</span>
+          <h2>Where are you today?</h2>
+          <p>Use this section to reflect on areas of confidence, exposure and support required.</p>
+        </div>
+      </div>
+      <div class="reflectionGrid">
+        <label>Most confident handover areas<textarea id="strengths" rows="4" placeholder="What can you manage independently today?"></textarea></label>
+        <label>Learning / coaching required<textarea id="support" rows="4" placeholder="Where do you still need guidance?"></textarea></label>
+        <label>Areas not sufficiently exposed<textarea id="notExposed" rows="4" placeholder="Which areas have you had limited practical exposure to?"></textarea></label>
+        <label>Support required from Operations Manager<textarea id="managerSupport" rows="4" placeholder="What support would help you progress faster?"></textarea></label>
+        <label>Client confidence support<textarea id="clientConfidence" rows="4" placeholder="What would help you engage the client more confidently?"></textarea></label>
+        <label>Top 3 priorities for next 60–90 days<textarea id="priorities" rows="4" placeholder="1.&#10;2.&#10;3."></textarea></label>
       </div>
     </section>
 
-    <section class="card">
-      <h2>Participant Details</h2>
-      <div class="grid two">
-        <label>Name<input id="name" type="text" placeholder="Enter your name" /></label>
-        <label>Assessment Date<input id="date" type="date" /></label>
+    <section id="results" class="contentSection resultSection">
+      <div class="sectionHeader">
+        <div>
+          <span class="sectionEyebrow">MANAGEMENT READINESS VIEW</span>
+          <h2>Development & Alignment Dashboard</h2>
+          <p>Review self-readiness, manager assessment alignment and the development heatmap.</p>
+        </div>
+        <button class="primaryBtn" onclick="generateReport()">Generate Readiness Report</button>
+      </div>
+
+      <div id="report" class="reportPlaceholder">
+        <div class="emptyIcon">◎</div>
+        <h3>No report generated yet</h3>
+        <p>Complete the assessment and select “Generate Readiness Report”.</p>
+      </div>
+
+      <div id="managerPanel" class="managerPanel hidden">
+        <div class="panelHeading">
+          <div>
+            <span class="sectionEyebrow">MANAGER ASSESSMENT</span>
+            <h3>Self vs Manager Comparison</h3>
+            <p>Enter your manager assessment score for each capability to compare alignment.</p>
+          </div>
+        </div>
+        <div id="managerScoreInputs" class="managerScoreGrid"></div>
+        <div class="reportActions">
+          <button class="primaryBtn" onclick="updateManagerComparison()">Update Comparison</button>
+        </div>
+      </div>
+
+      <div id="comparisonArea" class="hidden">
+        <div class="dashboardTwoCol">
+          <div class="chartCard">
+            <div class="chartTitle">
+              <div>
+                <span class="sectionEyebrow">CAPABILITY PROFILE</span>
+                <h3>Readiness Radar</h3>
+              </div>
+            </div>
+            <canvas id="radarCanvas" width="600" height="460"></canvas>
+            <div class="legendRow">
+              <span><i class="legendDot selfDot"></i> Self Assessment</span>
+              <span><i class="legendDot mgrDot"></i> Manager Assessment</span>
+            </div>
+          </div>
+
+          <div class="chartCard">
+            <div class="chartTitle">
+              <div>
+                <span class="sectionEyebrow">ALIGNMENT</span>
+                <h3>Self vs Manager Gap</h3>
+              </div>
+            </div>
+            <div id="alignmentSummary"></div>
+          </div>
+        </div>
+
+        <div class="heatmapCard">
+          <div class="chartTitle">
+            <div>
+              <span class="sectionEyebrow">60–90 DAY DEVELOPMENT</span>
+              <h3>Capability Heatmap</h3>
+              <p>Green = stronger readiness, Amber = developing, Red = priority support.</p>
+            </div>
+          </div>
+          <div id="heatmap" class="heatmap"></div>
+        </div>
       </div>
     </section>
 
-    <form id="surveyForm"></form>
-
-    <section class="card">
-      <h2>90-Day Reflection</h2>
-      <label>Which handover areas are you most confident handling independently today?
-        <textarea id="strengths" rows="4"></textarea>
-      </label>
-      <label>Which handover areas still require more learning, exposure or coaching?
-        <textarea id="support" rows="4"></textarea>
-      </label>
-      <label>Which areas do you feel you have not had enough practical exposure to yet?
-        <textarea id="notExposed" rows="4"></textarea>
-      </label>
-      <label>What support from your Operations Manager would help you progress faster?
-        <textarea id="managerSupport" rows="4"></textarea>
-      </label>
-      <label>What would help you become more confident when engaging the client on Resolver performance and issues?
-        <textarea id="clientConfidence" rows="4"></textarea>
-      </label>
-      <label>What are your top three development priorities for the next 60–90 days?
-        <textarea id="priorities" rows="4"></textarea>
-      </label>
+    <section id="actionplan" class="contentSection actionSection">
+      <div class="sectionHeader">
+        <div>
+          <span class="sectionEyebrow">NEXT 60–90 DAYS</span>
+          <h2>Development Action Plan</h2>
+          <p>Use the three focus areas below after the report is generated.</p>
+        </div>
+      </div>
+      <div id="actionPlanCards" class="actionCards">
+        <div class="actionCard"><span>01</span><h3>Focus Area</h3><p>Generated from your lowest scoring capability.</p></div>
+        <div class="actionCard"><span>02</span><h3>Focus Area</h3><p>Generated from your lowest scoring capability.</p></div>
+        <div class="actionCard"><span>03</span><h3>Focus Area</h3><p>Generated from your lowest scoring capability.</p></div>
+      </div>
     </section>
-
-    <section class="actions">
-      <button type="button" class="secondary" onclick="saveProgress()">Save Progress</button>
-      <button type="button" class="secondary" onclick="loadProgress()">Restore Progress</button>
-      <button type="button" class="primary" onclick="generateReport()">Generate Readiness Report</button>
-    </section>
-
-    <section id="report" class="report hidden"></section>
 
     <footer>
-      <p>This assessment is a development and readiness tool. It is not a pass/fail assessment and should be reviewed together with actual role exposure, observed performance, attendance availability and coaching discussions.</p>
+      This assessment is intended for development planning and should be reviewed together with actual role exposure, observed performance and coaching discussions.
     </footer>
   </main>
-<script src="app.js"></script>
+
+  <button class="floatTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <script src="app.js"></script>
 </body>
 </html>
