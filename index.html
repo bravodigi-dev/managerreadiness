@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resolver Manager 90-Day Readiness Assessment</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Resolver Leadership Development</p>
+        <h1>Resolver Manager 90-Day Readiness Assessment</h1>
+        <p class="subtitle">
+          Based on the initial handover expectations, this assessment measures current exposure,
+          understanding, confidence and ability to manage independently.
+        </p>
+      </div>
+      <div class="badge">Development Assessment</div>
+    </section>
+
+    <section class="card intro">
+      <h2>Assessment Scale</h2>
+      <p>Rate yourself based on your current position today. Select <strong>1 — Not Yet Exposed</strong> where the handover or practical exposure has not yet taken place.</p>
+      <div class="scale">
+        <span><b>1</b> Not Yet Exposed</span>
+        <span><b>2</b> Basic Awareness</span>
+        <span><b>3</b> Can Manage With Guidance</span>
+        <span><b>4</b> Can Manage Independently</span>
+        <span><b>5</b> Can Lead / Coach Others</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Participant Details</h2>
+      <div class="grid two">
+        <label>Name<input id="name" type="text" placeholder="Enter your name" /></label>
+        <label>Assessment Date<input id="date" type="date" /></label>
+      </div>
+    </section>
+
+    <form id="surveyForm"></form>
+
+    <section class="card">
+      <h2>90-Day Reflection</h2>
+      <label>Which handover areas are you most confident handling independently today?
+        <textarea id="strengths" rows="4"></textarea>
+      </label>
+      <label>Which handover areas still require more learning, exposure or coaching?
+        <textarea id="support" rows="4"></textarea>
+      </label>
+      <label>Which areas do you feel you have not had enough practical exposure to yet?
+        <textarea id="notExposed" rows="4"></textarea>
+      </label>
+      <label>What support from your Operations Manager would help you progress faster?
+        <textarea id="managerSupport" rows="4"></textarea>
+      </label>
+      <label>What would help you become more confident when engaging the client on Resolver performance and issues?
+        <textarea id="clientConfidence" rows="4"></textarea>
+      </label>
+      <label>What are your top three development priorities for the next 60–90 days?
+        <textarea id="priorities" rows="4"></textarea>
+      </label>
+    </section>
+
+    <section class="actions">
+      <button type="button" class="secondary" onclick="saveProgress()">Save Progress</button>
+      <button type="button" class="secondary" onclick="loadProgress()">Restore Progress</button>
+      <button type="button" class="primary" onclick="generateReport()">Generate Readiness Report</button>
+    </section>
+
+    <section id="report" class="report hidden"></section>
+
+    <footer>
+      <p>This assessment is a development and readiness tool. It is not a pass/fail assessment and should be reviewed together with actual role exposure, observed performance, attendance availability and coaching discussions.</p>
+    </footer>
+  </main>
+<script src="app.js"></script>
+</body>
+</html>
