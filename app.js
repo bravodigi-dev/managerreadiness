@@ -209,70 +209,33 @@ function generateReport(){
  d.label=readinessLabel(d.overall);
  const sorted=[...d.sections].sort((a,b)=>a.percent-b.percent);
  const exposure=d.sections.reduce((n,s)=>n+s.notExposed,0);
-
+ const optionText={1:"Not Yet Exposed",2:"Basic Awareness",3:"Can Manage With Guidance",4:"Can Manage Independently",5:"Can Lead / Coach Others"};
+ const detailedSections=d.sections.map((s,si)=>{
+   const source=sections[si];
+   const rawScore=s.values.reduce((a,b)=>a+(b||0),0);
+   const maxScore=s.values.length*5;
+   const calcPct=maxScore?(rawScore/maxScore)*100:0;
+   return `<div class="detailSection">
+    <div class="detailSectionHeader"><div class="detailHeadLeft"><span class="detailSectionNumber">${si+1}</span><div><h3>${escapeHtml(s.title)}</h3><p>Weight: ${s.weight}%</p></div></div><div class="detailScoreBox"><span>Section Readiness</span><strong>${s.percent.toFixed(0)}%</strong></div></div>
+    <div class="calcBox"><strong>Section calculation:</strong> ${rawScore} selected points ÷ ${maxScore} maximum points × 100 = <strong>${calcPct.toFixed(1)}%</strong></div>
+    <div class="questionDetailList">${source.questions.map((q,qi)=>{const value=s.values[qi];return `<div class="questionDetailRow"><div class="detailQNo">${si+1}.${qi+1}</div><div class="detailQuestion"><div class="detailQuestionText">${escapeHtml(q)}</div><div class="detailAnswer"><span class="answerBadge answer${value}">${value}</span><strong>${escapeHtml(optionText[value]||"")}</strong></div></div></div>`}).join("")}</div>
+   </div>`;
+ }).join("");
  const r=document.getElementById("report");
  r.className="";
  r.innerHTML=`
-   <div class="personBanner">
-     <div>
-       <h3>${escapeHtml(d.participantName)}</h3>
-       <p>${escapeHtml(d.participantRole || "Resolver Manager")} • 90-Day Development Assessment</p>
-     </div>
-     <div>
-       <p><strong>Assessment:</strong> ${escapeHtml(d.assessmentDate || "-")}</p>
-       <p><strong>Role Start:</strong> ${escapeHtml(d.roleStartDate || "-")}</p>
-     </div>
-   </div>
-   <div class="reportGrid">
-     <div class="reportMetric"><span>Overall Self-Readiness</span><b>${d.overall.toFixed(1)}%</b></div>
-     <div class="reportMetric"><span>Current Development Stage</span><b style="font-size:18px">${d.label}</b></div>
-     <div class="reportMetric"><span>Not Yet Exposed</span><b>${exposure}</b></div>
-   </div>
-   <div class="capBars">
-     ${d.sections.map(s=>`
-       <div class="capRow">
-         <div class="capTop"><span>${s.title}</span><span>${s.percent.toFixed(0)}%</span></div>
-         <div class="capBar"><div class="capFill" style="width:${Math.min(100,s.percent)}%"></div></div>
-       </div>`).join("")}
-   </div>
-   <div class="discussionBox">
-     <h3>Discussion Focus — Next 60–90 Days</h3>
-     <div class="discussionGrid">
-       ${sorted.slice(0,3).map((s,i)=>{
-          const c=s.percent>=75?"discGreen":s.percent>=55?"discAmber":"discRed";
-          const t=s.percent>=75?"Strengthen / Stretch":s.percent>=55?"Developing":"Priority Support";
-          return `<div class="discussionItem ${c}">
-             <strong>0${i+1} • ${s.title}</strong>
-             <p>${s.percent.toFixed(0)}% — ${t}. Use this as a discussion area for practical exposure, coaching and agreed next steps.</p>
-          </div>`;
-       }).join("")}
-     </div>
-   </div>
-   <div class="reportReflection">
-     <h3>90-Day Reflection</h3>
-     <p><b>Most confident handover areas</b><br>${nl2br(d.strengths) || "Not provided"}</p>
-     <p><b>Learning / coaching required</b><br>${nl2br(d.support) || "Not provided"}</p>
-     <p><b>Areas not sufficiently exposed</b><br>${nl2br(d.notExposed) || "Not provided"}</p>
-     <p><b>Support required from Operations Manager</b><br>${nl2br(d.managerSupport) || "Not provided"}</p>
-     <p><b>What would improve client confidence</b><br>${nl2br(d.clientConfidence) || "Not provided"}</p>
-     <p><b>Top 3 priorities for next 60–90 days</b><br>${nl2br(d.priorities) || "Not provided"}</p>
-   </div>
-   <div class="reportActions">
-     <button class="primaryBtn" onclick="window.print()">Save / Print Report as PDF</button>
-     <button class="secondaryBtn" onclick="downloadCSV()">Download CSV</button>
-   </div>`;
- document.getElementById("actionPlanCards").innerHTML=sorted.slice(0,3).map((s,i)=>`
-   <div class="actionCard">
-     <span>0${i+1}</span>
-     <h3>${s.title}</h3>
-     <p>Current self-readiness: <strong>${s.percent.toFixed(0)}%</strong>. Discuss practical exposure, guided ownership and the next review checkpoint.</p>
-   </div>`).join("");
+   <div class="personBanner"><div><h3>${escapeHtml(d.participantName)}</h3><p>${escapeHtml(d.participantRole||"Resolver Manager")} • 90-Day Development Assessment</p></div><div><p><strong>Assessment:</strong> ${escapeHtml(d.assessmentDate||"-")}</p><p><strong>Role Start:</strong> ${escapeHtml(d.roleStartDate||"-")}</p></div></div>
+   <div class="reportGrid"><div class="reportMetric"><span>Overall Self-Readiness</span><b>${d.overall.toFixed(1)}%</b></div><div class="reportMetric"><span>Current Development Stage</span><b style="font-size:18px">${d.label}</b></div><div class="reportMetric"><span>Not Yet Exposed</span><b>${exposure}</b></div></div>
+   <div class="capBars"><h3>Capability Readiness Summary</h3>${d.sections.map(s=>`<div class="capRow"><div class="capTop"><span>${s.title}</span><span>${s.percent.toFixed(0)}%</span></div><div class="capBar"><div class="capFill" style="width:${Math.min(100,s.percent)}%"></div></div></div>`).join("")}</div>
+   <div class="discussionBox"><h3>Discussion Focus — Next 60–90 Days</h3><div class="discussionGrid">${sorted.slice(0,3).map((s,i)=>{const c=s.percent>=75?"discGreen":s.percent>=55?"discAmber":"discRed";const t=s.percent>=75?"Strengthen / Stretch":s.percent>=55?"Developing":"Priority Support";return `<div class="discussionItem ${c}"><strong>0${i+1} • ${s.title}</strong><p>${s.percent.toFixed(0)}% — ${t}. Use this as a discussion area for practical exposure, coaching and agreed next steps.</p></div>`}).join("")}</div></div>
+   <div class="reportReflection"><h3>90-Day Reflection</h3><p><b>Most confident handover areas</b><br>${nl2br(d.strengths)||"Not provided"}</p><p><b>Learning / coaching required</b><br>${nl2br(d.support)||"Not provided"}</p><p><b>Areas not sufficiently exposed</b><br>${nl2br(d.notExposed)||"Not provided"}</p><p><b>Support required from Operations Manager</b><br>${nl2br(d.managerSupport)||"Not provided"}</p><p><b>What would improve client confidence</b><br>${nl2br(d.clientConfidence)||"Not provided"}</p><p><b>Top 3 priorities for next 60–90 days</b><br>${nl2br(d.priorities)||"Not provided"}</p></div>
+   <div class="detailedReport"><div class="detailedReportTitle"><span class="sectionEyebrow">QUESTIONNAIRE DETAIL</span><h2>Complete Question & Response Breakdown</h2><p>Each section shows the exact question, selected readiness option and the calculation used to derive the section percentage.</p></div>${detailedSections}</div>
+   <div class="reportActions"><button class="primaryBtn" onclick="window.print()">Save / Print Detailed Report as PDF</button><button class="secondaryBtn" onclick="downloadCSV()">Download Detailed CSV</button></div>`;
+ document.getElementById("actionPlanCards").innerHTML=sorted.slice(0,3).map((s,i)=>`<div class="actionCard"><span>0${i+1}</span><h3>${s.title}</h3><p>Current self-readiness: <strong>${s.percent.toFixed(0)}%</strong>. Discuss practical exposure, guided ownership and the next review checkpoint.</p></div>`).join("");
  window.lastSurvey=d;
  document.getElementById("results").scrollIntoView({behavior:"smooth"});
 }
-function escapeHtml(s){
- return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-}
+function escapeHtml(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
 function nl2br(s){return escapeHtml(s).replace(/\n/g,"<br>");}
 
 function saveProgress(){
@@ -309,22 +272,14 @@ function loadProgress(){
 function toggleDark(){document.body.classList.toggle("dark")}
 function downloadCSV(){
  const d=window.lastSurvey||collectData();
- const rows=[
-   ["Resolver Manager 90-Day Self-Assessment"],
-   ["Manager Name",d.participantName||""],
-   ["Current Role",d.participantRole||""],
-   ["Role Start",d.roleStartDate||""],
-   ["Assessment Date",d.assessmentDate||""],
-   ["Previous Role",d.previousRole||""],
-   [],
-   ["Overall Self-Readiness",d.overall?.toFixed(1)+"%"||""],
-   [],
-   ["Capability","Weight","Readiness","Not Yet Exposed"]
- ];
+ const optionText={1:"Not Yet Exposed",2:"Basic Awareness",3:"Can Manage With Guidance",4:"Can Manage Independently",5:"Can Lead / Coach Others"};
+ const rows=[["Resolver Manager 90-Day Self-Assessment — Detailed Report"],["Manager Name",d.participantName||""],["Current Role",d.participantRole||""],["Role Start",d.roleStartDate||""],["Assessment Date",d.assessmentDate||""],["Previous Role",d.previousRole||""],[],["Overall Self-Readiness",d.overall?.toFixed(1)+"%"||""],[],["SECTION SUMMARY"],["Capability","Weight","Readiness","Not Yet Exposed"]];
  d.sections.forEach(s=>rows.push([s.title,s.weight+"%",s.percent.toFixed(1)+"%",s.notExposed]));
- rows.push([],["Reflection","Response"],["Most confident areas",d.strengths],["Learning / coaching required",d.support],["Not sufficiently exposed",d.notExposed],["Manager support",d.managerSupport],["Client confidence support",d.clientConfidence],["Next priorities",d.priorities]);
+ rows.push([], ["DETAILED QUESTIONNAIRE"], ["Section","Question No.","Question","Selected Score","Selected Option","Section %"]);
+ d.sections.forEach((s,si)=>{sections[si].questions.forEach((q,qi)=>{const selected=s.values[qi];rows.push([s.title,`${si+1}.${qi+1}`,q,selected,optionText[selected]||"",s.percent.toFixed(1)+"%"]);});});
+ rows.push([], ["REFLECTION","Response"],["Most confident areas",d.strengths],["Learning / coaching required",d.support],["Not sufficiently exposed",d.notExposed],["Manager support",d.managerSupport],["Client confidence support",d.clientConfidence],["Next priorities",d.priorities]);
  const csv=rows.map(r=>r.map(x=>`"${String(x??"").replaceAll('"','""')}"`).join(",")).join("\n");
- saveBlob(csv,"resolver_manager_90_day_readiness.csv","text/csv");
+ saveBlob(csv,`${safe(d.participantName||"manager")}_90_day_detailed_assessment.csv`,"text/csv");
 }
 function downloadJSON(){
  const d=window.lastSurvey||collectData();
