@@ -269,6 +269,15 @@ function loadProgress(){
  });
  updateProgress();
 }
+
+function startNewAssessment(){
+ const confirmed=confirm("Start a new assessment? This will clear all saved answers, notes, reflections and manager details on this device.");
+ if(!confirmed) return;
+ localStorage.removeItem("resolverManagerDashboardV3");
+ window.lastSurvey=null;
+ location.href=location.pathname;
+}
+
 function toggleDark(){document.body.classList.toggle("dark")}
 function downloadCSV(){
  const d=window.lastSurvey||collectData();
