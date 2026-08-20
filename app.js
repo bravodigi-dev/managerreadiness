@@ -215,9 +215,11 @@ function generateReport(){
    const rawScore=s.values.reduce((a,b)=>a+(b||0),0);
    const maxScore=s.values.length*5;
    const calcPct=maxScore?(rawScore/maxScore)*100:0;
+   const counts=[1,2,3,4,5].map(v=>({v,count:s.values.filter(x=>x===v).length,label:optionText[v]}));
    return `<div class="detailSection">
     <div class="detailSectionHeader"><div class="detailHeadLeft"><span class="detailSectionNumber">${si+1}</span><div><h3>${escapeHtml(s.title)}</h3><p>Weight: ${s.weight}%</p></div></div><div class="detailScoreBox"><span>Section Readiness</span><strong>${s.percent.toFixed(0)}%</strong></div></div>
     <div class="calcBox"><strong>Section calculation:</strong> ${rawScore} selected points ÷ ${maxScore} maximum points × 100 = <strong>${calcPct.toFixed(1)}%</strong></div>
+    <div class="scoreCountBox"><strong>Selected score count</strong><div class="scoreCountGrid">${counts.map(c=>`<div class="scoreCountItem count${c.v}"><span>${c.v}</span><b>${c.count}</b><small>${c.label}</small></div>`).join("")}</div></div>
     <div class="questionDetailList">${source.questions.map((q,qi)=>{const value=s.values[qi];return `<div class="questionDetailRow"><div class="detailQNo">${si+1}.${qi+1}</div><div class="detailQuestion"><div class="detailQuestionText">${escapeHtml(q)}</div><div class="detailAnswer"><span class="answerBadge answer${value}">${value}</span><strong>${escapeHtml(optionText[value]||"")}</strong></div></div></div>`}).join("")}</div>
    </div>`;
  }).join("");

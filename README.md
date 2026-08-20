@@ -1,9 +1,7 @@
-# Resolver Manager 90-Day Self-Assessment — Detailed Report
+# Updated version
 
-Replace your GitHub files with index.html, styles.css and app.js.
-
-The final PDF/print report now includes every questionnaire item, the selected 1–5 response and its meaning, plus the calculation behind each section percentage. The CSV also contains the full question-level breakdown.
-
-
-## Start New Assessment
-A new **Start New Assessment** button has been added beside Save Progress. It asks for confirmation, deletes the locally saved draft, and reloads the assessment at 0%.
+Fixes included:
+- Better alignment of rating boxes
+- Selected option now highlights in light purple
+- Detailed report shows each question, selected option, section calculation, and selected score count breakdown (1-5) per section
+- Better top action button layout
